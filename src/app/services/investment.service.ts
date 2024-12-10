@@ -1,26 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { UserInputComponent } from './components/user-input/user-input.component';
-import { InvestmentInput, InvestmentResult } from './models';
-import { InvestmentResultsComponent } from './components/investment-results/investment-results.component';
+import { Injectable, signal } from '@angular/core';
+import { InvestmentInput, InvestmentResult } from '../models';
 
-@Component({
-  selector: 'invest-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    UserInputComponent,
-    InvestmentResultsComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+@Injectable({
+  providedIn: 'root',
 })
-export class AppComponent {
-  title = 'investment-calculator';
-
-  resultsData = signal<InvestmentResult[]>([]);
+export class InvestmentService {
+  resultData = signal<InvestmentResult[]>([]);
 
   calculateInvestmentResults(data: InvestmentInput) {
     const { initialInvestment, duration, expectedReturn, annualInvestment } =
@@ -44,6 +29,6 @@ export class AppComponent {
       });
     }
 
-    this.resultsData.set(annualData);
+    this.resultData.set(annualData);
   }
 }
